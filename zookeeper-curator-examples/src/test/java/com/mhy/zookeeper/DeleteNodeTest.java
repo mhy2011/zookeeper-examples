@@ -1,0 +1,52 @@
+package com.mhy.zookeeper;
+
+import org.apache.curator.RetryPolicy;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author mahaiyuan
+ * @ClassName: DeleteNodeTest
+ * @date 2016-07-23 下午5:48
+ */
+public class DeleteNodeTest {
+
+  private CuratorFramework client;
+
+  @Before
+  public void before(){
+    String connectStr = "127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183";
+    RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 5);
+    client = CuratorFrameworkFactory.builder()
+            .connectString(connectStr)
+            .retryPolicy(retryPolicy)
+            .sessionTimeoutMs(5000)
+            .build();
+    client.start();
+  }
+
+  /**
+   * 删除节点
+   * @throws Exception
+   */
+  @Test
+  public void testDeleteNode01() throws Exception {
+    String path = "/c1";
+    client.delete().forPath(path);
+  }
+
+  /**
+   * 删除节点
+   * @throws Exception
+   */
+  @Test
+  public void testDeleteNode02() throws Exception {
+    String path = "/c1";
+    client.delete()
+            .deletingChildrenIfNeeded() //如果非叶子节点,删除其子节点
+            .forPath(path);
+  }
+}
