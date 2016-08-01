@@ -13,7 +13,7 @@
         <level value="DEBUG"></level>
         <appender-ref ref="STDOUT-APPENDER"></appender-ref>
     </logger>
-    <root level="debug">    <!-- root logger，定义级别为debug -->
+    <root level="ERROR">    <!-- root logger，定义级别为debug -->
         <appender-ref ref="STDOUT-APPENDER" />    <!--将名为STDOUT的appender添加到root logger下 -->
     </root>
 </configuration>
