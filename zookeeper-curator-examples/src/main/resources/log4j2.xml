@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <!--自定义变量-->
+        <Property name="LOG_PATH">/data/application/logs/log4j2</Property>
+    </Properties>
+    <Appenders>
+        <RollingRandomAccessFile name="default" fileName="${LOG_PATH}/default.log" immediateFlush="true"
+                                 filePattern="${log-path}/default.log.%d{yyyyMMdd}">
+            <PatternLayout>
+                <pattern>%highlight{[%-5p]} %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1}.%M:%L] [%X{traceId}] %m %n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!--每天一个日志文件-->
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+            </Policies>
+            <!--保留30天日志-->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingRandomAccessFile>
+        <!--输出到文件-->
+        <RollingFile name="business-log" fileName="${LOG_PATH}/business.log"
+                     filePattern="${LOG_PATH}/business.log.%d{yyyyMMdd}">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy  />
+            </Policies>
+        </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>%highlight{[%-5p]} %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%c{1}.%M:%L] [%X{traceId}] %m %n</pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <logger name="com.mhy.zookeeper" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

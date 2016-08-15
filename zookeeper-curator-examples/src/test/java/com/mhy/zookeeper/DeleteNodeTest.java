@@ -18,7 +18,7 @@ public class DeleteNodeTest {
 
   @Before
   public void before(){
-    String connectStr = "127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183";
+    String connectStr = "10.94.100.229:2181,10.94.100.229:3181,10.94.100.229:4181";
     RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 5);
     client = CuratorFrameworkFactory.builder()
             .connectString(connectStr)
@@ -44,7 +44,7 @@ public class DeleteNodeTest {
    */
   @Test
   public void testDeleteNode02() throws Exception {
-    String path = "/c1";
+    String path = "/lucifer";
     client.delete()
             .deletingChildrenIfNeeded() //如果非叶子节点,删除其子节点
             .forPath(path);
