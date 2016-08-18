@@ -30,7 +30,7 @@ public class NodeCacheDemo {
         System.out.println("节点当前内容为:" + new String(cache.getCurrentData().getData()));
       }
     });
-    cache.start();  //启动监听
+    cache.start(true);  //启动监听
 
     //触发节点内容变更
     String content = null;
